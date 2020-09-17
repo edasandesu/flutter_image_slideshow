@@ -1,8 +1,7 @@
 name: flutter_image_slideshow
 description: A new Flutter package.
 version: 0.0.1
-author:
-homepage:
+homepage: https://github.com/edasandesu/flutter_image_slideshow
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
