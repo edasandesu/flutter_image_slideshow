@@ -22,30 +22,34 @@ In your library add the following import:
 
 ## Usage
 
+These are The ImageSlideshow properties.
+
 ```dart
-ImageSlideshow(
+/// The widgets to display in the [ImageSlideshow].
+///
+/// Mainly intended for image widget, but other widgets can also be used.
+final List<Widget> children,
 
-  /// The widgets to display in the [ImageSlideshow].
-  List<Widget> children,
+/// Width of the [ImageSlideshow].
+final double width,
 
-  /// Width of the [ImageSlideshow].
-  double width,
+/// Height of the [ImageSlideshow].
+final double height,
 
-  /// Height of the [ImageSlideshow].
-  double height,
+/// The page to show when first creating the [ImageSlideshow].
+final int initialPage,
 
-  /// The page to show when first creating the [ImageSlideshow].
-  int initialPage,
+/// The color to paint the indicator.
+final Color indicatorColor,
 
-  /// The color to paint the indicator.
-  Color indicatorColor,
-
-  /// The color to paint behind th indicator.
-  Color indicatorBackgroundColor,
-)
+/// The color to paint behind th indicator.
+final Color indicatorBackgroundColor,
 ```
 
 ## Example
+
+Create the ImageSlideshow widget.
+And pass the parameters.
 
 ```dart
 import 'package:flutter/material.dart';
@@ -64,11 +68,23 @@ class MyApp extends StatelessWidget {
           title: Text('Demo'),
         ),
         body: ImageSlideshow(
+
+          /// Width of the [ImageSlideshow].
           width: double.infinity,
+
+          /// Height of the [ImageSlideshow].
           height: 200,
+
+          /// The page to show when first creating the [ImageSlideshow].
           initialPage: 0,
+
+          /// The color to paint the indicator.
           indicatorColor: Colors.blue,
+
+          /// The color to paint behind th indicator.
           indicatorBackgroundColor: Colors.grey,
+
+          /// The widgets to display in the [ImageSlideshow].
           children: [
             Image.asset(
               'images/sample_image_1.jpg',
