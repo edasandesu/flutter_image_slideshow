@@ -1,5 +1,5 @@
 name: flutter_image_slideshow
-description: A new Flutter package.
+description: A simple image slideshow widget. Mainly intended for image widget, but other widgets can also be used.
 version: 0.0.1
 homepage: https://github.com/edasandesu/flutter_image_slideshow
 
