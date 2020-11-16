@@ -28,22 +28,25 @@ These are The ImageSlideshow properties.
 /// The widgets to display in the [ImageSlideshow].
 ///
 /// Mainly intended for image widget, but other widgets can also be used.
-final List<Widget> children,
+List<Widget> children
 
 /// Width of the [ImageSlideshow].
-final double width,
+double width
 
 /// Height of the [ImageSlideshow].
-final double height,
+double height
 
 /// The page to show when first creating the [ImageSlideshow].
-final int initialPage,
+int initialPage
 
 /// The color to paint the indicator.
-final Color indicatorColor,
+Color indicatorColor
 
 /// The color to paint behind th indicator.
-final Color indicatorBackgroundColor,
+Color indicatorBackgroundColor
+
+/// Called whenever the page in the center of the viewport changes.
+ValueChanged<int> onPageChanged
 ```
 
 ## Example
@@ -99,6 +102,11 @@ class MyApp extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ],
+
+          /// Called whenever the page in the center of the viewport changes.
+          onPageChanged: (value) {
+            print('Page changed: $value');
+          },
         ),
       ),
     );
