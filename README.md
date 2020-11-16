@@ -11,7 +11,7 @@ In the `pubspec.yaml` of your flutter project, add the following dependency:
 dependencies:
   flutter:
     sdk:
-  flutter_image_slideshow: ^0.0.2
+  flutter_image_slideshow: ^0.0.2+1
 ```
 
 In your library add the following import:

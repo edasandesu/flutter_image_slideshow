@@ -1,3 +1,7 @@
+## 0.0.2+1 - Nov 16, 2020.
+
+Update README.md
+
 ## 0.0.2 - Nov 16, 2020.
 
 Now with onPageChanged customisations you can also make many other processing.
