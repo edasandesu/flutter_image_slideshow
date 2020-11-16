@@ -1,3 +1,7 @@
-## [0.0.1] - TODO: Add release date.
+## 0.0.2 - Nov 16, 2020.
 
-* TODO: Describe initial release.
+Now with onPageChanged customisations you can also make many other processing.
+
+## 0.0.1 - Sep 18, 2020.
+
+Initial Version of the library.
