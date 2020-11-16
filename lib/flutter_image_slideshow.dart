@@ -1,5 +1,3 @@
-library flutter_image_slideshow;
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -12,48 +10,28 @@ class ImageSlideshow extends StatefulWidget {
     this.initialPage = 0,
     this.indicatorColor = Colors.blue,
     this.indicatorBackgroundColor = Colors.grey,
+    this.onPageChanged,
   });
-
-  /// The widgets to display in the [ImageSlideshow].
   final List<Widget> children;
-
-  /// Width of the [ImageSlideshow].
   final double width;
-
-  /// Height of the [ImageSlideshow].
   final double height;
-
-  /// The page to show when first creating the [ImageSlideshow].
   final int initialPage;
-
-  /// The color to paint the indicator.
   final Color indicatorColor;
-
-  /// The color to paint behind th indicator.
   final Color indicatorBackgroundColor;
+  final ValueChanged<int> onPageChanged;
 
   @override
   _ImageSlideshowState createState() => _ImageSlideshowState();
 }
 
 class _ImageSlideshowState extends State<ImageSlideshow> {
-  final StreamController<int> _onPageChanged =
+  final StreamController<int> _pageStreamController =
       StreamController<int>.broadcast();
   PageController _pageController;
 
-  @override
-  void initState() {
-    _pageController = PageController(
-      initialPage: widget.initialPage,
-    );
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    _onPageChanged.close();
-    super.dispose();
+  void _onPageChanged(int value) {
+    _pageStreamController.sink.add(value);
+    widget.onPageChanged(value);
   }
 
   Widget _indicator(BuildContext context) {
@@ -66,7 +44,7 @@ class _ImageSlideshowState extends State<ImageSlideshow> {
         (index) {
           return StreamBuilder<int>(
             initialData: _pageController.initialPage,
-            stream: _onPageChanged.stream.where(
+            stream: _pageStreamController.stream.where(
               (pageIndex) {
                 return index >= pageIndex - 1 && index <= pageIndex + 1;
               },
@@ -90,6 +68,21 @@ class _ImageSlideshowState extends State<ImageSlideshow> {
   }
 
   @override
+  void initState() {
+    _pageController = PageController(
+      initialPage: widget.initialPage,
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    _pageStreamController.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: widget.width,
@@ -97,7 +90,7 @@ class _ImageSlideshowState extends State<ImageSlideshow> {
       child: Stack(
         children: [
           PageView.builder(
-            onPageChanged: _onPageChanged.sink.add,
+            onPageChanged: _onPageChanged,
             itemCount: widget.children.length,
             controller: _pageController,
             itemBuilder: (context, index) {
