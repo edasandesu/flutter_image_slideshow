@@ -3,6 +3,8 @@
 A simple image slideshow widget.
 Mainly intended for image widget, but other widgets can also be used.
 
+![demo](https://raw.github.com/wiki/edasandesu/flutter_image_slideshow/images/slideshow.gif)
+
 ## Getting Started
 
 In the `pubspec.yaml` of your flutter project, add the following dependency:
@@ -11,7 +13,7 @@ In the `pubspec.yaml` of your flutter project, add the following dependency:
 dependencies:
   flutter:
     sdk:
-  flutter_image_slideshow: ^0.0.2+1
+  flutter_image_slideshow: ^{latest_version}
 ```
 
 In your library add the following import:
@@ -88,6 +90,7 @@ class MyApp extends StatelessWidget {
           indicatorBackgroundColor: Colors.grey,
 
           /// The widgets to display in the [ImageSlideshow].
+          /// Add the sample image file into the images folder
           children: [
             Image.asset(
               'images/sample_image_1.jpg',

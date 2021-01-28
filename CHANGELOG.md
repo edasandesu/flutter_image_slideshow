@@ -1,3 +1,7 @@
+## 0.0.2+2 - Jan 28, 2021.
+
+Update README.md
+
 ## 0.0.2+1 - Nov 16, 2020.
 
 Update README.md
