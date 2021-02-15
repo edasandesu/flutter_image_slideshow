@@ -48,8 +48,6 @@ class _ImageSlideshowState extends State<ImageSlideshow> {
             initialData: _pageController.initialPage,
             stream: _pageStreamController.stream.where(
               (pageIndex) {
-                print('index $index');
-                print('page index $pageIndex');
                 return index >= pageIndex - 1 && index <= pageIndex + 1;
               },
             ),
