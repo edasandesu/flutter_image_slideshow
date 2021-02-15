@@ -1,3 +1,7 @@
+## 0.0.2+4 - Feb 15, 2021.
+
+Delete log.
+
 ## 0.0.2+3 - Feb 15, 2021.
 
 Fix when onPageChanged is null.
