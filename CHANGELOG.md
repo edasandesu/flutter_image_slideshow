@@ -1,3 +1,7 @@
+## 0.0.2+3 - Feb 15, 2021.
+
+Fix when onPageChanged is null.
+
 ## 0.0.2+2 - Jan 28, 2021.
 
 Update README.md

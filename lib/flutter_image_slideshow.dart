@@ -31,7 +31,9 @@ class _ImageSlideshowState extends State<ImageSlideshow> {
 
   void _onPageChanged(int value) {
     _pageStreamController.sink.add(value);
-    widget.onPageChanged(value);
+    if (widget.onPageChanged != null) {
+      widget.onPageChanged(value);
+    }
   }
 
   Widget _indicator(BuildContext context) {
@@ -46,6 +48,8 @@ class _ImageSlideshowState extends State<ImageSlideshow> {
             initialData: _pageController.initialPage,
             stream: _pageStreamController.stream.where(
               (pageIndex) {
+                print('index $index');
+                print('page index $pageIndex');
                 return index >= pageIndex - 1 && index <= pageIndex + 1;
               },
             ),
