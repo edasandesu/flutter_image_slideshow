@@ -11,14 +11,36 @@ class ImageSlideshow extends StatefulWidget {
     this.indicatorColor = Colors.blue,
     this.indicatorBackgroundColor = Colors.grey,
     this.onPageChanged,
+    this.autoPlayInterval,
   });
+
+  /// The widgets to display in the [ImageSlideshow].
+  ///
+  /// Mainly intended for image widget, but other widgets can also be used.
   final List<Widget> children;
+
+  /// Width of the [ImageSlideshow].
   final double width;
+
+  /// Height of the [ImageSlideshow].
   final double height;
+
+  /// The page to show when first creating the [ImageSlideshow].
   final int initialPage;
+
+  /// The color to paint the indicator.
   final Color indicatorColor;
+
+  /// The color to paint behind th indicator.
   final Color indicatorBackgroundColor;
+
+  /// Called whenever the page in the center of the viewport changes.
   final ValueChanged<int> onPageChanged;
+
+  /// Auto scroll interval.
+  ///
+  /// Do not auto scroll when you enter null or 0.
+  final int autoPlayInterval;
 
   @override
   _ImageSlideshowState createState() => _ImageSlideshowState();
@@ -28,8 +50,10 @@ class _ImageSlideshowState extends State<ImageSlideshow> {
   final StreamController<int> _pageStreamController =
       StreamController<int>.broadcast();
   PageController _pageController;
+  int _currentPage;
 
   void _onPageChanged(int value) {
+    _currentPage = value;
     _pageStreamController.sink.add(value);
     if (widget.onPageChanged != null) {
       widget.onPageChanged(value);
@@ -74,6 +98,26 @@ class _ImageSlideshowState extends State<ImageSlideshow> {
     _pageController = PageController(
       initialPage: widget.initialPage,
     );
+    _currentPage = widget.initialPage;
+
+    if (widget.autoPlayInterval != null && widget.autoPlayInterval != 0) {
+      Timer.periodic(
+        Duration(milliseconds: widget.autoPlayInterval),
+        (timer) {
+          if (_currentPage < widget.children.length - 1) {
+            _currentPage++;
+          } else {
+            _currentPage = 0;
+          }
+
+          _pageController.animateToPage(
+            _currentPage,
+            duration: Duration(milliseconds: 350),
+            curve: Curves.easeIn,
+          );
+        },
+      );
+    }
     super.initState();
   }
 

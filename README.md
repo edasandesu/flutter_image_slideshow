@@ -49,6 +49,11 @@ Color indicatorBackgroundColor
 
 /// Called whenever the page in the center of the viewport changes.
 ValueChanged<int> onPageChanged
+
+/// Auto scroll interval.
+///
+/// Do not auto scroll with null or 0.
+autoPlayInterval: 3000
 ```
 
 ## Example
@@ -110,6 +115,10 @@ class MyApp extends StatelessWidget {
           onPageChanged: (value) {
             print('Page changed: $value');
           },
+
+          /// Auto scroll interval.
+          /// Do not auto scroll with null or 0.
+          autoPlayInterval: 3000,
         ),
       ),
     );

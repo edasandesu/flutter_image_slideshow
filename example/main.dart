@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
           onPageChanged: (value) {
             print('Page changed: $value');
           },
+          autoPlayInterval: 3000,
         ),
       ),
     );

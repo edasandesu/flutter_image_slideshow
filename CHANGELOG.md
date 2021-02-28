@@ -1,3 +1,7 @@
+## 0.0.3 - Feb 28, 2021.
+
+Add an "AutoPlay" feature.
+
 ## 0.0.2+4 - Feb 15, 2021.
 
 Delete log.
