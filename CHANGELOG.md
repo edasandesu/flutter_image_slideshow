@@ -1,3 +1,7 @@
+## 0.0.4 - Apr 12, 2021.
+
+Add processing to check clients before animateToPage.
+
 ## 0.0.3 - Feb 28, 2021.
 
 Add an "AutoPlay" feature.
