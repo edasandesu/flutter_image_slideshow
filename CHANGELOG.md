@@ -1,3 +1,7 @@
+## 0.1.0 - May 6, 2021.
+
+Migrate to null safety.
+
 ## 0.0.4 - Apr 12, 2021.
 
 Add processing to check clients before animateToPage.
