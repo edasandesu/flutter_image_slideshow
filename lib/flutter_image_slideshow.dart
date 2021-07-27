@@ -10,7 +10,7 @@ class ImageSlideshow extends StatefulWidget {
     this.width = double.infinity,
     this.height = 200,
     this.initialPage = 0,
-    this.indicatorColor = Colors.blue,
+    this.indicatorColor,
     this.indicatorBackgroundColor = Colors.grey,
     this.onPageChanged,
     this.autoPlayInterval,
@@ -31,10 +31,10 @@ class ImageSlideshow extends StatefulWidget {
   final int initialPage;
 
   /// The color to paint the indicator.
-  final Color indicatorColor;
+  final Color? indicatorColor;
 
   /// The color to paint behind th indicator.
-  final Color indicatorBackgroundColor;
+  final Color? indicatorBackgroundColor;
 
   /// Called whenever the page in the center of the viewport changes.
   final ValueChanged<int>? onPageChanged;
@@ -50,15 +50,36 @@ class ImageSlideshow extends StatefulWidget {
 
 class _ImageSlideshowState extends State<ImageSlideshow> {
   final _currentPageNotifier = ValueNotifier(0);
-  PageController _pageController = PageController(initialPage: 0);
-  int _currentPage = 0;
+  late PageController _pageController;
+
+  int get currentPage => _currentPageNotifier.value;
 
   void _onPageChanged(int value) {
-    _currentPage = value;
     _currentPageNotifier.value = value;
     if (widget.onPageChanged != null) {
       widget.onPageChanged!(value);
     }
+  }
+
+  void _autoPlay() {
+    Timer.periodic(
+      Duration(milliseconds: widget.autoPlayInterval!),
+      (timer) {
+        if (currentPage < widget.children.length - 1) {
+          _currentPageNotifier.value++;
+        } else {
+          _currentPageNotifier.value = 0;
+        }
+
+        if (_pageController.hasClients) {
+          _pageController.animateToPage(
+            currentPage,
+            duration: const Duration(milliseconds: 350),
+            curve: Curves.easeIn,
+          );
+        }
+      },
+    );
   }
 
   @override
@@ -66,27 +87,10 @@ class _ImageSlideshowState extends State<ImageSlideshow> {
     _pageController = PageController(
       initialPage: widget.initialPage,
     );
-    _currentPage = widget.initialPage;
+    _currentPageNotifier.value = widget.initialPage;
 
     if (widget.autoPlayInterval != null && widget.autoPlayInterval != 0) {
-      Timer.periodic(
-        Duration(milliseconds: widget.autoPlayInterval!),
-        (timer) {
-          if (_currentPage < widget.children.length - 1) {
-            _currentPage++;
-          } else {
-            _currentPage = 0;
-          }
-
-          if (_pageController.hasClients) {
-            _pageController.animateToPage(
-              _currentPage,
-              duration: const Duration(milliseconds: 350),
-              curve: Curves.easeIn,
-            );
-          }
-        },
-      );
+      _autoPlay();
     }
     super.initState();
   }

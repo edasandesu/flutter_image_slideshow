@@ -23,13 +23,10 @@ class Indicator extends StatelessWidget {
       children: List.generate(
         count,
         (index) {
-          return Container(
-            width: 6,
-            height: 6,
-            decoration: ShapeDecoration(
-              shape: const CircleBorder(),
-              color: currentIndex == index ? activeColor : backgroundColor,
-            ),
+          return CircleAvatar(
+            radius: 3,
+            backgroundColor:
+                currentIndex == index ? activeColor : backgroundColor,
           );
         },
       ),
