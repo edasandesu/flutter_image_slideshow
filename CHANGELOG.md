@@ -1,3 +1,7 @@
+## 0.1.1 - July 27, 2021.
+
+Add an "isLoop" variable.
+
 ## 0.1.0 - May 6, 2021.
 
 Migrate to null safety.
