@@ -19,6 +19,11 @@ class MyApp extends StatelessWidget {
           initialPage: 0,
           indicatorColor: Colors.blue,
           indicatorBackgroundColor: Colors.grey,
+          onPageChanged: (value) {
+            debugPrint('Page changed: $value');
+          },
+          autoPlayInterval: 3000,
+          isLoop: true,
           children: [
             Image.asset(
               'images/sample_image_1.jpg',
@@ -33,10 +38,6 @@ class MyApp extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ],
-          onPageChanged: (value) {
-            print('Page changed: $value');
-          },
-          autoPlayInterval: 3000,
         ),
       ),
     );

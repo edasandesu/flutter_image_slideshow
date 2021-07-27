@@ -14,6 +14,7 @@ class ImageSlideshow extends StatefulWidget {
     this.indicatorBackgroundColor = Colors.grey,
     this.onPageChanged,
     this.autoPlayInterval,
+    this.isLoop = false,
   }) : super(key: key);
 
   /// The widgets to display in the [ImageSlideshow].
@@ -44,6 +45,9 @@ class ImageSlideshow extends StatefulWidget {
   /// Do not auto scroll when you enter null or 0.
   final int? autoPlayInterval;
 
+  /// loop to return first slide.
+  final bool isLoop;
+
   @override
   _ImageSlideshowState createState() => _ImageSlideshowState();
 }
@@ -52,28 +56,32 @@ class _ImageSlideshowState extends State<ImageSlideshow> {
   final _currentPageNotifier = ValueNotifier(0);
   late PageController _pageController;
 
-  int get currentPage => _currentPageNotifier.value;
-
-  void _onPageChanged(int value) {
-    _currentPageNotifier.value = value;
+  void _onPageChanged(int index) {
+    _currentPageNotifier.value = index;
     if (widget.onPageChanged != null) {
-      widget.onPageChanged!(value);
+      final correctIndex = index % widget.children.length;
+      widget.onPageChanged!(correctIndex);
     }
   }
 
-  void _autoPlay() {
+  void _autoPlayTimerStart() {
     Timer.periodic(
       Duration(milliseconds: widget.autoPlayInterval!),
       (timer) {
-        if (currentPage < widget.children.length - 1) {
-          _currentPageNotifier.value++;
+        int nextPage;
+        if (widget.isLoop) {
+          nextPage = _currentPageNotifier.value + 1;
         } else {
-          _currentPageNotifier.value = 0;
+          if (_currentPageNotifier.value < widget.children.length - 1) {
+            nextPage = _currentPageNotifier.value + 1;
+          } else {
+            return;
+          }
         }
 
         if (_pageController.hasClients) {
           _pageController.animateToPage(
-            currentPage,
+            nextPage,
             duration: const Duration(milliseconds: 350),
             curve: Curves.easeIn,
           );
@@ -90,7 +98,7 @@ class _ImageSlideshowState extends State<ImageSlideshow> {
     _currentPageNotifier.value = widget.initialPage;
 
     if (widget.autoPlayInterval != null && widget.autoPlayInterval != 0) {
-      _autoPlay();
+      _autoPlayTimerStart();
     }
     super.initState();
   }
@@ -110,10 +118,11 @@ class _ImageSlideshowState extends State<ImageSlideshow> {
         children: [
           PageView.builder(
             onPageChanged: _onPageChanged,
-            itemCount: widget.children.length,
+            itemCount: widget.isLoop ? null : widget.children.length,
             controller: _pageController,
             itemBuilder: (context, index) {
-              return widget.children[index];
+              final correctIndex = index % widget.children.length;
+              return widget.children[correctIndex];
             },
           ),
           Positioned(
@@ -125,7 +134,7 @@ class _ImageSlideshowState extends State<ImageSlideshow> {
               builder: (context, value, child) {
                 return Indicator(
                   count: widget.children.length,
-                  currentIndex: value,
+                  currentIndex: value % widget.children.length,
                   activeColor: widget.indicatorColor,
                   backgroundColor: widget.indicatorBackgroundColor,
                 );
