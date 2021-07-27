@@ -13,7 +13,7 @@ In the `pubspec.yaml` of your flutter project, add the following dependency:
 dependencies:
   flutter:
     sdk:
-  flutter_image_slideshow: ^{latest_version}
+  flutter_image_slideshow: any
 ```
 
 In your library add the following import:
@@ -53,7 +53,10 @@ ValueChanged<int> onPageChanged
 /// Auto scroll interval.
 ///
 /// Do not auto scroll with null or 0.
-autoPlayInterval: 3000
+int autoPlayInterval
+
+/// Loops back to first slide.
+bool isLoop
 ```
 
 ## Example
@@ -119,6 +122,9 @@ class MyApp extends StatelessWidget {
           /// Auto scroll interval.
           /// Do not auto scroll with null or 0.
           autoPlayInterval: 3000,
+
+          /// Loops back to first slide.
+          isLoop: true,
         ),
       ),
     );

@@ -45,7 +45,7 @@ class ImageSlideshow extends StatefulWidget {
   /// Do not auto scroll when you enter null or 0.
   final int? autoPlayInterval;
 
-  /// loop to return first slide.
+  /// Loops back to first slide.
   final bool isLoop;
 
   @override
