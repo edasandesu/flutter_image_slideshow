@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_image_slideshow/indicator.dart';
 
 class ImageSlideshow extends StatefulWidget {
-  ImageSlideshow({
+  const ImageSlideshow({
+    Key? key,
     required this.children,
     this.width = double.infinity,
     this.height = 200,
@@ -12,7 +14,7 @@ class ImageSlideshow extends StatefulWidget {
     this.indicatorBackgroundColor = Colors.grey,
     this.onPageChanged,
     this.autoPlayInterval,
-  });
+  }) : super(key: key);
 
   /// The widgets to display in the [ImageSlideshow].
   ///
@@ -47,50 +49,16 @@ class ImageSlideshow extends StatefulWidget {
 }
 
 class _ImageSlideshowState extends State<ImageSlideshow> {
-  final StreamController<int> _pageStreamController =
-      StreamController<int>.broadcast();
+  final _currentPageNotifier = ValueNotifier(0);
   PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
 
   void _onPageChanged(int value) {
     _currentPage = value;
-    _pageStreamController.sink.add(value);
+    _currentPageNotifier.value = value;
     if (widget.onPageChanged != null) {
       widget.onPageChanged!(value);
     }
-  }
-
-  Widget _indicator(BuildContext context) {
-    return Wrap(
-      spacing: 4,
-      runSpacing: 4,
-      alignment: WrapAlignment.center,
-      children: List<Widget>.generate(
-        widget.children.length,
-        (index) {
-          return StreamBuilder<int>(
-            initialData: _pageController.initialPage,
-            stream: _pageStreamController.stream.where(
-              (pageIndex) {
-                return index >= pageIndex - 1 && index <= pageIndex + 1;
-              },
-            ),
-            builder: (_, AsyncSnapshot<int> snapshot) {
-              return Container(
-                width: 6,
-                height: 6,
-                decoration: ShapeDecoration(
-                  shape: CircleBorder(),
-                  color: snapshot.data == index
-                      ? widget.indicatorColor
-                      : widget.indicatorBackgroundColor,
-                ),
-              );
-            },
-          );
-        },
-      ),
-    );
   }
 
   @override
@@ -113,7 +81,7 @@ class _ImageSlideshowState extends State<ImageSlideshow> {
           if (_pageController.hasClients) {
             _pageController.animateToPage(
               _currentPage,
-              duration: Duration(milliseconds: 350),
+              duration: const Duration(milliseconds: 350),
               curve: Curves.easeIn,
             );
           }
@@ -126,7 +94,6 @@ class _ImageSlideshowState extends State<ImageSlideshow> {
   @override
   void dispose() {
     _pageController.dispose();
-    _pageStreamController.close();
     super.dispose();
   }
 
@@ -146,10 +113,20 @@ class _ImageSlideshowState extends State<ImageSlideshow> {
             },
           ),
           Positioned(
-            left: 0.0,
-            right: 0.0,
-            bottom: 10.0,
-            child: _indicator(context),
+            left: 0,
+            right: 0,
+            bottom: 10,
+            child: ValueListenableBuilder<int>(
+              valueListenable: _currentPageNotifier,
+              builder: (context, value, child) {
+                return Indicator(
+                  count: widget.children.length,
+                  currentIndex: value,
+                  activeColor: widget.indicatorColor,
+                  backgroundColor: widget.indicatorBackgroundColor,
+                );
+              },
+            ),
           ),
         ],
       ),
