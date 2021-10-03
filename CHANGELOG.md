@@ -1,3 +1,7 @@
+## 0.1.2 - Oct 3, 2021.
+
+Add the "scrollBehavior".
+
 ## 0.1.1 - July 27, 2021.
 
 Add an "isLoop" variable.
