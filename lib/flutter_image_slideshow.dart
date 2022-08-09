@@ -50,12 +50,13 @@ class ImageSlideshow extends StatefulWidget {
   final bool isLoop;
 
   @override
-  _ImageSlideshowState createState() => _ImageSlideshowState();
+  ImageSlideshowState createState() => ImageSlideshowState();
 }
 
-class _ImageSlideshowState extends State<ImageSlideshow> {
+class ImageSlideshowState extends State<ImageSlideshow> {
   final _currentPageNotifier = ValueNotifier(0);
   late PageController _pageController;
+  Timer? _timer;
 
   void _onPageChanged(int index) {
     _currentPageNotifier.value = index;
@@ -66,7 +67,8 @@ class _ImageSlideshowState extends State<ImageSlideshow> {
   }
 
   void _autoPlayTimerStart() {
-    Timer.periodic(
+    _timer?.cancel();
+    _timer = Timer.periodic(
       Duration(milliseconds: widget.autoPlayInterval!),
       (timer) {
         int nextPage;
@@ -80,15 +82,22 @@ class _ImageSlideshowState extends State<ImageSlideshow> {
           }
         }
 
-        if (_pageController.hasClients) {
-          _pageController.animateToPage(
-            nextPage,
-            duration: const Duration(milliseconds: 350),
-            curve: Curves.easeIn,
-          );
-        }
+        goToPage(nextPage);
       },
     );
+  }
+
+  void goToPage(int index) {
+    if (_pageController.hasClients) {
+      _pageController.animateToPage(
+        index,
+        duration: const Duration(milliseconds: 350),
+        curve: Curves.easeIn,
+      );
+    }  }
+
+  void stopAutoPlay() {
+    _timer?.cancel();
   }
 
   @override
