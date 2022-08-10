@@ -94,7 +94,8 @@ class ImageSlideshowState extends State<ImageSlideshow> {
         duration: const Duration(milliseconds: 350),
         curve: Curves.easeIn,
       );
-    }  }
+    }
+  }
 
   void stopAutoPlay() {
     _timer?.cancel();
