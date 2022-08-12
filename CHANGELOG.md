@@ -1,3 +1,8 @@
+## 0.1.3 - Aug 12, 2022
+
+Make "ImageSlideshowState" public.
+Add "goToPage" and "stopAutoPlay"
+
 ## 0.1.2 - Oct 3, 2021.
 
 Add the "scrollBehavior".
