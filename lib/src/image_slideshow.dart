@@ -54,8 +54,8 @@ class ImageSlideshow extends StatefulWidget {
 }
 
 class ImageSlideshowState extends State<ImageSlideshow> {
-  final _currentPageNotifier = ValueNotifier(0);
-  late PageController _pageController;
+  late final ValueNotifier<int> _currentPageNotifier;
+  late final PageController _pageController;
   Timer? _timer;
 
   void _onPageChanged(int index) {
@@ -106,7 +106,8 @@ class ImageSlideshowState extends State<ImageSlideshow> {
     _pageController = PageController(
       initialPage: widget.initialPage,
     );
-    _currentPageNotifier.value = widget.initialPage;
+
+    _currentPageNotifier = ValueNotifier(widget.initialPage);
 
     if (widget.autoPlayInterval != null && widget.autoPlayInterval != 0) {
       _autoPlayTimerStart();
@@ -117,6 +118,7 @@ class ImageSlideshowState extends State<ImageSlideshow> {
   @override
   void dispose() {
     _pageController.dispose();
+    _currentPageNotifier.dispose();
     super.dispose();
   }
 
