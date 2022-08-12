@@ -2,23 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Demo'),
+          title: const Text('Demo'),
         ),
         body: ImageSlideshow(
-          width: double.infinity,
-          height: 200,
-          initialPage: 0,
           indicatorColor: Colors.blue,
-          indicatorBackgroundColor: Colors.grey,
           onPageChanged: (value) {
             debugPrint('Page changed: $value');
           },
