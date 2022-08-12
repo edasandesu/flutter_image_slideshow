@@ -3,7 +3,7 @@
 A simple image slideshow widget.
 Mainly intended for image widget, but other widgets can also be used.
 
-<image src="https://raw.github.com/wiki/edasandesu/flutter_image_slideshow/images/slideshow.gif" height=500>
+<image src="https://raw.github.com/wiki/edasandesu/flutter_image_slideshow/images/slideshow.gif" width=270>
 
 ## Getting Started
 
