@@ -50,7 +50,7 @@ class ImageSlideshow extends StatefulWidget {
   /// Loops back to first slide.
   final bool isLoop;
 
-  /// Radius of CircleIndicatro.
+  /// Radius of CircleIndicator.
   final double radius;
 
   @override
