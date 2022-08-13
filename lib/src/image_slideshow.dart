@@ -16,6 +16,7 @@ class ImageSlideshow extends StatefulWidget {
     this.onPageChanged,
     this.autoPlayInterval,
     this.isLoop = false,
+    this.radius = 3,
   }) : super(key: key);
 
   /// The widgets to display in the [ImageSlideshow].
@@ -48,6 +49,9 @@ class ImageSlideshow extends StatefulWidget {
 
   /// Loops back to first slide.
   final bool isLoop;
+
+  /// Radius of CircleIndicatro.
+  final double radius;
 
   @override
   ImageSlideshowState createState() => ImageSlideshowState();
@@ -157,6 +161,7 @@ class ImageSlideshowState extends State<ImageSlideshow> {
                   currentIndex: value % widget.children.length,
                   activeColor: widget.indicatorColor,
                   backgroundColor: widget.indicatorBackgroundColor,
+                  radius: widget.radius,
                 );
               },
             ),

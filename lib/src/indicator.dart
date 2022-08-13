@@ -7,12 +7,14 @@ class Indicator extends StatelessWidget {
     required this.currentIndex,
     this.activeColor,
     this.backgroundColor,
+    required this.radius,
   }) : super(key: key);
 
   final int count;
   final int currentIndex;
   final Color? activeColor;
   final Color? backgroundColor;
+  final double radius;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class Indicator extends StatelessWidget {
         count,
         (index) {
           return CircleAvatar(
-            radius: 3,
+            radius: radius,
             backgroundColor:
                 currentIndex == index ? activeColor : backgroundColor,
           );
