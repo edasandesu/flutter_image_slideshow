@@ -161,7 +161,7 @@ class ImageSlideshowState extends State<ImageSlideshow> {
                   currentIndex: value % widget.children.length,
                   activeColor: widget.indicatorColor,
                   backgroundColor: widget.indicatorBackgroundColor,
-                  radius: widget.radius,
+                  radius: widget.indicatorRadius,
                 );
               },
             ),
