@@ -1,3 +1,7 @@
+## 0.1.4 - Aug 15, 2022
+
+Add customize size indicator.
+
 ## 0.1.3 - Aug 12, 2022
 
 Make "ImageSlideshowState" public.
