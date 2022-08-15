@@ -57,6 +57,9 @@ int autoPlayInterval
 
 /// Loops back to first slide.
 bool isLoop
+
+/// Radius of circle indicator.
+double indicatorRadius
 ```
 
 ## Example
