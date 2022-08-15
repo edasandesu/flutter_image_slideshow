@@ -51,7 +51,7 @@ class ImageSlideshow extends StatefulWidget {
   final bool isLoop;
 
   /// Radius of CircleIndicator.
-  final double radius;
+  final double indicatorRadius;
 
   @override
   ImageSlideshowState createState() => ImageSlideshowState();
