@@ -16,7 +16,7 @@ class ImageSlideshow extends StatefulWidget {
     this.onPageChanged,
     this.autoPlayInterval,
     this.isLoop = false,
-    this.radius = 3,
+    this.indicatorRadius = 3,
   }) : super(key: key);
 
   /// The widgets to display in the [ImageSlideshow].
