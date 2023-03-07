@@ -17,6 +17,7 @@ class ImageSlideshow extends StatefulWidget {
     this.autoPlayInterval,
     this.isLoop = false,
     this.indicatorRadius = 3,
+    this.disableUserScrolling = false,
   }) : super(key: key);
 
   /// The widgets to display in the [ImageSlideshow].
@@ -53,6 +54,9 @@ class ImageSlideshow extends StatefulWidget {
   /// Radius of CircleIndicator.
   final double indicatorRadius;
 
+  /// Disable page changes by the user.
+  final bool disableUserScrolling;
+
   @override
   ImageSlideshowState createState() => ImageSlideshowState();
 }
@@ -60,6 +64,7 @@ class ImageSlideshow extends StatefulWidget {
 class ImageSlideshowState extends State<ImageSlideshow> {
   late final ValueNotifier<int> _currentPageNotifier;
   late final PageController _pageController;
+  late final ScrollBehavior _scrollBehavior;
   Timer? _timer;
 
   void _onPageChanged(int index) {
@@ -107,6 +112,19 @@ class ImageSlideshowState extends State<ImageSlideshow> {
 
   @override
   void initState() {
+    _scrollBehavior = widget.disableUserScrolling
+        ? const ScrollBehavior().copyWith(
+            scrollbars: false,
+            dragDevices: {},
+          )
+        : const ScrollBehavior().copyWith(
+            scrollbars: false,
+            dragDevices: {
+              PointerDeviceKind.touch,
+              PointerDeviceKind.mouse,
+            },
+          );
+
     _pageController = PageController(
       initialPage: widget.initialPage,
     );
@@ -134,13 +152,7 @@ class ImageSlideshowState extends State<ImageSlideshow> {
       child: Stack(
         children: [
           PageView.builder(
-            scrollBehavior: const ScrollBehavior().copyWith(
-              scrollbars: false,
-              dragDevices: {
-                PointerDeviceKind.touch,
-                PointerDeviceKind.mouse,
-              },
-            ),
+            scrollBehavior: _scrollBehavior,
             onPageChanged: _onPageChanged,
             itemCount: widget.isLoop ? null : widget.children.length,
             controller: _pageController,

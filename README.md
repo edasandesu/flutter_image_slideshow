@@ -60,6 +60,9 @@ bool isLoop
 
 /// Radius of circle indicator.
 double indicatorRadius
+
+/// Disable page changes by the user.
+bool disableUserScrolling
 ```
 
 ## Example
