@@ -1,3 +1,7 @@
+## 0.1.5 - Mar 28, 2023
+
+- Add option for disabling manual page changes by the user [#16](https://github.com/edasandesu/flutter_image_slideshow/pull/16)
+
 ## 0.1.4 - Aug 15, 2022
 
 Add customize size indicator.
