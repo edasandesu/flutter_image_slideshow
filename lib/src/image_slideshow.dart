@@ -141,6 +141,7 @@ class ImageSlideshowState extends State<ImageSlideshow> {
   void dispose() {
     _pageController.dispose();
     _currentPageNotifier.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 
