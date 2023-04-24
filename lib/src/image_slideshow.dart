@@ -17,6 +17,7 @@ class ImageSlideshow extends StatefulWidget {
     this.autoPlayInterval,
     this.isLoop = false,
     this.indicatorRadius = 3,
+    this.indicatorPadding = 4,
     this.disableUserScrolling = false,
   }) : super(key: key);
 
@@ -53,6 +54,9 @@ class ImageSlideshow extends StatefulWidget {
 
   /// Radius of CircleIndicator.
   final double indicatorRadius;
+
+  /// Padding of CircleIndicator.
+  final double indicatorPadding;
 
   /// Disable page changes by the user.
   final bool disableUserScrolling;
@@ -175,6 +179,7 @@ class ImageSlideshowState extends State<ImageSlideshow> {
                   activeColor: widget.indicatorColor,
                   backgroundColor: widget.indicatorBackgroundColor,
                   radius: widget.indicatorRadius,
+                  padding: widget.indicatorPadding,
                 );
               },
             ),
