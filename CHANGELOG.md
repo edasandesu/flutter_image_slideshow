@@ -1,3 +1,8 @@
+## 0.1.6 - Jul 2, 2023
+
+- Add customize indicator padding. [#18](https://github.com/edasandesu/flutter_image_slideshow/pull/18)
+- Fix the issue where Timer is not being disposed [#14](https://github.com/edasandesu/flutter_image_slideshow/issues/14)
+
 ## 0.1.5 - Mar 28, 2023
 
 - Add option for disabling manual page changes by the user [#16](https://github.com/edasandesu/flutter_image_slideshow/pull/16)
