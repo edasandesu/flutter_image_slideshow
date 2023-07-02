@@ -7,6 +7,7 @@ class Indicator extends StatelessWidget {
     required this.currentIndex,
     this.activeColor,
     this.backgroundColor,
+    required this.padding,
     required this.radius,
   }) : super(key: key);
 
@@ -14,13 +15,14 @@ class Indicator extends StatelessWidget {
   final int currentIndex;
   final Color? activeColor;
   final Color? backgroundColor;
+  final double padding;
   final double radius;
 
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 4,
-      runSpacing: 4,
+      spacing: padding,
+      runSpacing: padding,
       alignment: WrapAlignment.center,
       children: List.generate(
         count,
