@@ -118,6 +118,20 @@ class ImageSlideshowState extends State<ImageSlideshow> {
     _timer?.cancel();
   }
 
+
+  void pauseAutoPlay () {
+    stopAutoPlay();
+  }
+
+  void resumeAutoPlay () {
+    var page = _currentPageNotifier.value + 1;
+    if (page == widget.children.length) {
+      page = 0;
+    }
+    goToPage (page);
+    _autoPlayTimerStart();
+  }
+
   @override
   void initState() {
     _scrollBehavior = widget.disableUserScrolling
