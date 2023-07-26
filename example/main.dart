@@ -22,10 +22,16 @@ class _MyAppState extends State<MyApp> {
     final state = appGlobalKey.currentState;
     if (isPaused) {
       state!.resumeAutoPlay();
-      isPaused = false;
+      setState ((){
+        isPaused = false;
+        pauseResume = 'Pause';
+      });
     } else {
       state!.stopAutoPlay();
-      isPaused = true;
+      setState (() {
+        isPaused = true;
+        pauseResume = 'Resume';
+      });
     }
   }
 
@@ -48,7 +54,7 @@ class _MyAppState extends State<MyApp> {
               isLoop: true,
               children: [
 
-// TODO:  Find better publically available images
+// TODO:  Find better publically available images or use asset
                   Image.network ('https://a4.pbase.com/g10/30/3430/2/167112793.ytdYuYRK.jpg',
 //                Image.asset('',
                   fit: BoxFit.cover,
