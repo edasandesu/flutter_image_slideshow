@@ -54,17 +54,15 @@ class _MyAppState extends State<MyApp> {
               isLoop: true,
               children: [
 
-// TODO:  Find better publically available images or use asset
-                  Image.network ('https://a4.pbase.com/g10/30/3430/2/167112793.ytdYuYRK.jpg',
-//                Image.asset('',
+// Lorem Picsum:  https://picsum.photos/
+// Royalty free placeholder photos
+                Image.network ('https://picsum.photos/id/169/450/275',
                   fit: BoxFit.cover,
                 ),
-                Image.network ('https://a4.pbase.com/g10/30/3430/2/167112843.czYUDbz3.jpg',
-//                Image.asset('',
+                Image.network ('https://picsum.photos/id/237/450/275',
                   fit: BoxFit.cover,
                 ),
-                Image.network ('https://a4.pbase.com/g10/30/3430/2/167113073.UdJk2RLI.jpg',
-//                Image.asset('',
+                Image.network ('https://picsum.photos/id/659/450/275',
                   fit: BoxFit.cover,
                 ),
               ],
@@ -72,7 +70,6 @@ class _MyAppState extends State<MyApp> {
 
             const SizedBox (height: 30,),
 
-            // ignore: lines_longer_than_80_chars
             ElevatedButton (
               style: ElevatedButton.
                 styleFrom(minimumSize: const Size (80, 44),), 
