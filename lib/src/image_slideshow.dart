@@ -124,10 +124,7 @@ class ImageSlideshowState extends State<ImageSlideshow> {
   }
 
   void resumeAutoPlay () {
-    var page = _currentPageNotifier.value + 1;
-    if (page == widget.children.length) {
-      page = 0;
-    }
+    final page = _currentPageNotifier.value + 1;
     goToPage (page);
     _autoPlayTimerStart();
   }
