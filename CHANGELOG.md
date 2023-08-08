@@ -1,3 +1,9 @@
+## abhlabs pull request Jul 25, 2023
+- Added "resumeAutoPlay" function
+- Added "pauseAutoPlay" function which simply calls "stopAutoPlay"
+- Revised sample program to demostrate the use of a GlobalKey to access the 
+    flutter_image_slideshow state, and to call the public functions.
+
 ## 0.1.6 - Jul 2, 2023
 
 - Add customize indicator padding. [#18](https://github.com/edasandesu/flutter_image_slideshow/pull/18)
