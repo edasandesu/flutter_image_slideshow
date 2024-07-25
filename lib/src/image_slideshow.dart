@@ -4,6 +4,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/src/indicator.dart';
 
+typedef OnUserScrollingCallback = void Function(int currentPageIndex);
+
 class ImageSlideshow extends StatefulWidget {
   const ImageSlideshow({
     Key? key,
@@ -20,6 +22,9 @@ class ImageSlideshow extends StatefulWidget {
     this.indicatorPadding = 4,
     this.indicatorBottomPadding = 10,
     this.disableUserScrolling = false,
+    this.stopAutoPlayWhenUserScrolling = true,
+    this.onUserStartScrolling,
+    this.onUserEndScrolling,
   }) : super(key: key);
 
   /// The widgets to display in the [ImageSlideshow].
@@ -65,6 +70,15 @@ class ImageSlideshow extends StatefulWidget {
   /// Disable page changes by the user.
   final bool disableUserScrolling;
 
+  /// Stop auto scroll when user start scrolling
+  final bool stopAutoPlayWhenUserScrolling;
+
+  /// Called when user start scrolling
+  final OnUserScrollingCallback? onUserStartScrolling;
+
+  /// Called when user end scrolling
+  final OnUserScrollingCallback? onUserEndScrolling;
+
   @override
   ImageSlideshowState createState() => ImageSlideshowState();
 }
@@ -75,11 +89,17 @@ class ImageSlideshowState extends State<ImageSlideshow> {
   late final ScrollBehavior _scrollBehavior;
   Timer? _timer;
 
+  bool get _autoPlayEnabled =>
+      widget.autoPlayInterval != null && widget.autoPlayInterval != 0;
+
+  int get _currentPageIndex =>
+      _currentPageNotifier.value % widget.children.length;
+
   void _onPageChanged(int index) {
     _currentPageNotifier.value = index;
     if (widget.onPageChanged != null) {
       final correctIndex = index % widget.children.length;
-      widget.onPageChanged!(correctIndex);
+      widget.onPageChanged?.call(correctIndex);
     }
   }
 
@@ -102,6 +122,29 @@ class ImageSlideshowState extends State<ImageSlideshow> {
         goToPage(nextPage);
       },
     );
+  }
+
+  void _onUserStartScrolling(PointerDownEvent event) {
+    if (widget.disableUserScrolling || !widget.stopAutoPlayWhenUserScrolling) {
+      return;
+    }
+
+    if (_autoPlayEnabled) {
+      stopAutoPlay();
+    }
+
+    widget.onUserStartScrolling?.call(_currentPageIndex);
+  }
+
+  void _onUserEndScrolling(PointerUpEvent event) {
+    if (widget.disableUserScrolling || !widget.stopAutoPlayWhenUserScrolling) {
+      return;
+    }
+    if (_autoPlayEnabled) {
+      _autoPlayTimerStart();
+    }
+
+    widget.onUserEndScrolling?.call(_currentPageIndex);
   }
 
   void goToPage(int index) {
@@ -139,7 +182,7 @@ class ImageSlideshowState extends State<ImageSlideshow> {
 
     _currentPageNotifier = ValueNotifier(widget.initialPage);
 
-    if (widget.autoPlayInterval != null && widget.autoPlayInterval != 0) {
+    if (_autoPlayEnabled) {
       _autoPlayTimerStart();
     }
     super.initState();
@@ -160,15 +203,19 @@ class ImageSlideshowState extends State<ImageSlideshow> {
       height: widget.height,
       child: Stack(
         children: [
-          PageView.builder(
-            scrollBehavior: _scrollBehavior,
-            onPageChanged: _onPageChanged,
-            itemCount: widget.isLoop ? null : widget.children.length,
-            controller: _pageController,
-            itemBuilder: (context, index) {
-              final correctIndex = index % widget.children.length;
-              return widget.children[correctIndex];
-            },
+          Listener(
+            onPointerDown: _onUserStartScrolling,
+            onPointerUp: _onUserEndScrolling,
+            child: PageView.builder(
+              scrollBehavior: _scrollBehavior,
+              onPageChanged: _onPageChanged,
+              itemCount: widget.isLoop ? null : widget.children.length,
+              controller: _pageController,
+              itemBuilder: (context, index) {
+                final correctIndex = index % widget.children.length;
+                return widget.children[correctIndex];
+              },
+            ),
           ),
           Positioned(
             left: 0,
